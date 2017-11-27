@@ -50,13 +50,17 @@
   <ItemGroup>
     <Compile Include="Controller\AddCommand.cs" />
     <Compile Include="Controller\ClearCommand.cs" />
+    <Compile Include="Controller\CloseParenthesisCommand.cs" />
     <Compile Include="Controller\Command.cs" />
     <Compile Include="Controller\CommandProcessor.cs" />
     <Compile Include="Controller\CommandType.cs" />
     <Compile Include="Controller\Controller.cs" />
+    <Compile Include="Controller\EvalCommand.cs" />
     <Compile Include="Controller\MacroCommand.cs" />
-    <Compile Include="Controller\ReciprocalCommand.cs" />
+    <Compile Include="Controller\MultiplyCommand.cs" />
+    <Compile Include="Controller\OpenParenthesisCommand.cs" />
     <Compile Include="Controller\SetValueCommand.cs" />
+    <Compile Include="Controller\SubtractCommand.cs" />
     <Compile Include="Controller\UndoableCommand.cs" />
     <Compile Include="Model\Calculator.cs" />
     <Compile Include="Model\Evaluator.cs" />

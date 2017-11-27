@@ -2,27 +2,25 @@
 {
     using Js.Posa.CommandProcessor.Sample.Model;
 
-    public class SetValueCommand : UndoableCommand<Calculator>
+    internal class OpenParenthesisCommand : UndoableCommand<Calculator>
     {
         private readonly Calculator calculator;
-        private readonly decimal value;
 
-        public SetValueCommand(Calculator calculator, decimal value) 
+        public OpenParenthesisCommand(Calculator calculator)
             : base(calculator)
         {
             this.calculator = calculator;
-            this.value = value;
         }
 
         public override string Name
         {
-            get { return $"SET {value.ToString("0.##")}"; }
+            get { return "("; }
         }
 
         public override void Execute()
         {
             base.Execute();
-            this.calculator.EnterValue(value);
+            this.calculator.OpenParenthesis();
         }
     }
 }

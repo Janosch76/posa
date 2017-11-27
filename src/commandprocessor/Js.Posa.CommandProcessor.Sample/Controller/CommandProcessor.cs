@@ -102,7 +102,6 @@
                     break;
                 case CommandType.Undoable:
                     this.doneStack.Push(command);
-                    this.undoneStack.Clear();
                     break;
                 case CommandType.Normal:
                     this.doneStack.Clear();
@@ -166,6 +165,7 @@
 
             Command command = this.undoneStack.Pop();
             ExecuteCommand(command);
+            this.doneStack.Push(command);
         }
 
         private class UndoCommand : Command

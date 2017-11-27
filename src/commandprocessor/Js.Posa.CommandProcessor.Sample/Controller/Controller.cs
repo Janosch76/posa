@@ -1,5 +1,6 @@
 ﻿namespace Js.Posa.CommandProcessor.Sample.Controller
 {
+    using System;
     using System.Collections.Generic;
     using System.Linq;
     using Js.Posa.CommandProcessor.Sample.Model;
@@ -96,22 +97,65 @@
             this.commandProcessor.ExecuteCommand(clearCommand);
         }
 
+        /// <summary>
+        /// Handles the value entered event.
+        /// </summary>
+        /// <param name="value">The value.</param>
         public void ValueEntered(decimal value)
         {
-            Command setValueCommand = new EnterValueCommand(this.calculator, value);
+            Command setValueCommand = new SetValueCommand(this.calculator, value);
             this.commandProcessor.ExecuteCommand(setValueCommand);
         }
 
-        public void AddButtonPressed(decimal value)
+        /// <summary>
+        /// Handles the equals button pressed event.
+        /// </summary>
+        public void EvalButtonPressed()
+        {
+            Command evalCommand = new EvalCommand(this.calculator);
+            this.commandProcessor.ExecuteCommand(evalCommand);
+        }
+
+        /// <summary>
+        /// Handles the opening parenthesis pressed event.
+        /// </summary>
+        public void OpenParenthesisPressed()
+        {
+            Command openParenthesisCommand = new OpenParenthesisCommand(this.calculator);
+            this.commandProcessor.ExecuteCommand(openParenthesisCommand);
+        }
+
+        /// <summary>
+        /// Handles the closing parenthesis pressed event.
+        /// </summary>
+        public void CloseParenthesisPressed()
+        {
+            Command closeParenthesisCommand = new CloseParenthesisCommand(this.calculator);
+            this.commandProcessor.ExecuteCommand(closeParenthesisCommand);
+        }
+
+        /// <summary>
+        /// Handles the plus button pressed event.
+        /// </summary>
+        public void PlusButtonPressed()
         {
             Command addCommand = new AddCommand(this.calculator);
             this.commandProcessor.ExecuteCommand(addCommand);
         }
 
-        public void RecipButtonPressed()
+        /// <summary>
+        /// Handles the minus button pressed event.
+        /// </summary>
+        public void MinusButtonPressed()
         {
-            Command recipCommand = new ReciprocalCommand(this.calculator);
-            this.commandProcessor.ExecuteCommand(recipCommand);
+            Command subtractCommand = new SubtractCommand(this.calculator);
+            this.commandProcessor.ExecuteCommand(subtractCommand);
+        }
+
+        public void TimesButtonPressed()
+        {
+            Command multiplyCommand = new MultiplyCommand(this.calculator);
+            this.commandProcessor.ExecuteCommand(multiplyCommand);
         }
     }
 }

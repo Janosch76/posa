@@ -91,7 +91,7 @@
         /// </summary>
         public void Div()
         {
-            this.tokens.Add(new Token.Minus());
+            this.tokens.Add(new Token.Div());
         }
 
         /// <summary>
@@ -133,7 +133,7 @@
         /// <returns>The snapshot of the current calculator state.</returns>
         public IMemento<Calculator> CreateMemento()
         {
-            return new CalculatorMemento(this.current, this.tokens);
+            return new CalculatorMemento(this.current, this.tokens.ToList());
         }
 
         private class CalculatorMemento : IMemento<Calculator>

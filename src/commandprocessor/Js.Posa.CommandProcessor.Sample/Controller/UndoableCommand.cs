@@ -11,6 +11,7 @@
         public UndoableCommand(T provider) 
             : base(CommandType.Undoable)
         {
+            this.provider = provider;
         }
 
         public override void Execute()
