@@ -3,10 +3,14 @@
     using System;
     using System.Collections.Generic;
 
+    /// <summary>
+    /// A macro command.
+    /// </summary>
+    /// <seealso cref="Js.Posa.CommandProcessor.Sample.Controller.Command" />
     public class MacroCommand : Command
     {
-        private readonly string macroName;
         private readonly List<Command> commands;
+        private string macroName;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MacroCommand"/> class.
@@ -25,6 +29,15 @@
         public override string Name
         {
             get { return this.macroName; }
+        }
+
+        /// <summary>
+        /// Renames the macro.
+        /// </summary>
+        /// <param name="name">The new name.</param>
+        public void Rename(string name)
+        {
+            this.macroName = name;
         }
 
         /// <summary>

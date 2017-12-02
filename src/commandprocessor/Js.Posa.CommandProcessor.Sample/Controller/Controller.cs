@@ -12,6 +12,7 @@
     {
         private readonly Calculator calculator;
         private readonly CommandProcessor commandProcessor;
+        private readonly Dictionary<string, MacroCommand> macros;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Controller"/> class.
@@ -20,6 +21,7 @@
         {
             this.calculator = new Calculator();
             this.commandProcessor = new CommandProcessor();
+            this.macros = new Dictionary<string, MacroCommand>();
         }
 
         /// <summary>
@@ -156,6 +158,28 @@
         {
             Command multiplyCommand = new MultiplyCommand(this.calculator);
             this.commandProcessor.ExecuteCommand(multiplyCommand);
+        }
+
+        public void StartMacroRecording()
+        {
+            this.commandProcessor.StartMacroRecording();
+        }
+
+        public void SaveRecordedMacroAs(string name)
+        {
+            var macro = this.commandProcessor.StopMacroRecording();
+            macro.Rename(name);
+            this.macros[name] = macro;
+        }
+
+        public void RunMacro(string name)
+        {
+            if(!this.macros.ContainsKey(name))
+            {
+                throw new Exception($"Unknown macro '{name}'.");
+            }
+
+            this.commandProcessor.ExecuteCommand(this.macros[name]);
         }
     }
 }

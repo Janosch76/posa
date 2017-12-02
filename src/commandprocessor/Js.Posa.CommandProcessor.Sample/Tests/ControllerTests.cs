@@ -133,5 +133,27 @@
             Assert.AreEqual(7, result);
         }
 
+        [UnitTest]
+        [TestMethod]
+        public void RecordAndRunMacros()
+        {
+            var controller = new Controller();
+            controller.ValueEntered(5);
+            controller.StartMacroRecording();
+            controller.PlusButtonPressed();
+            controller.ValueEntered(2);
+            controller.SaveRecordedMacroAs("Macro1");
+            controller.StartMacroRecording();
+            controller.TimesButtonPressed();
+            controller.ValueEntered(2);
+            controller.SaveRecordedMacroAs("Macro2");
+            controller.RunMacro("Macro1");
+            controller.RunMacro("Macro2");
+            controller.EvalButtonPressed();
+
+            var result = controller.Result;
+
+            Assert.AreEqual(13, result);
+        }
     }
 }

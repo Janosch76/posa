@@ -94,6 +94,11 @@
         /// <param name="command">The command to execute.</param>
         public void ExecuteCommand(Command command)
         {
+            ExecuteCommand(command, false);
+        }
+
+        private void ExecuteCommand(Command command, bool keepUndoneStack = false)
+        {
             command.Execute();
 
             switch (command.Type)
@@ -102,6 +107,11 @@
                     break;
                 case CommandType.Undoable:
                     this.doneStack.Push(command);
+                    if (!keepUndoneStack)
+                    {
+                        this.undoneStack.Clear();
+                    }
+
                     break;
                 case CommandType.Normal:
                     this.doneStack.Clear();
@@ -133,7 +143,7 @@
         /// Stops the macro recording.
         /// </summary>
         /// <returns>The recorded macro command.</returns>
-        public Command StopMacroRecording()
+        public MacroCommand StopMacroRecording()
         {
             if (!this.macroRecordingInProgress)
             {
@@ -164,7 +174,7 @@
             }
 
             Command command = this.undoneStack.Pop();
-            ExecuteCommand(command);
+            ExecuteCommand(command, keepUndoneStack: true);
             this.doneStack.Push(command);
         }
 
