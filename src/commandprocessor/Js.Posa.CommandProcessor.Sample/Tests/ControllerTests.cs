@@ -3,6 +3,9 @@
     using Js.Posa.CommandProcessor.Sample.Controller;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    /// <summary>
+    /// A collection of unit tests for the <see cref="Controller"/> class.
+    /// </summary>
     [TestClass]
     public class ControllerTests : TestBase
     {

@@ -97,34 +97,6 @@
             ExecuteCommand(command, false);
         }
 
-        private void ExecuteCommand(Command command, bool keepUndoneStack = false)
-        {
-            command.Execute();
-
-            switch (command.Type)
-            {
-                case CommandType.NoChange:
-                    break;
-                case CommandType.Undoable:
-                    this.doneStack.Push(command);
-                    if (!keepUndoneStack)
-                    {
-                        this.undoneStack.Clear();
-                    }
-
-                    break;
-                case CommandType.Normal:
-                    this.doneStack.Clear();
-                    this.undoneStack.Clear();
-                    break;
-            }
-
-            if (this.macroRecordingInProgress)
-            {
-                this.macro.AddCommand(command);
-            }
-        }
-
         /// <summary>
         /// Starts the macro recording.
         /// </summary>
@@ -152,6 +124,34 @@
 
             this.macroRecordingInProgress = false;
             return this.macro;
+        }
+
+        private void ExecuteCommand(Command command, bool keepUndoneStack = false)
+        {
+            command.Execute();
+
+            switch (command.Type)
+            {
+                case CommandType.NoChange:
+                    break;
+                case CommandType.Undoable:
+                    this.doneStack.Push(command);
+                    if (!keepUndoneStack)
+                    {
+                        this.undoneStack.Clear();
+                    }
+
+                    break;
+                case CommandType.Normal:
+                    this.doneStack.Clear();
+                    this.undoneStack.Clear();
+                    break;
+            }
+
+            if (this.macroRecordingInProgress)
+            {
+                this.macro.AddCommand(command);
+            }
         }
 
         private void UndoLastCommand()

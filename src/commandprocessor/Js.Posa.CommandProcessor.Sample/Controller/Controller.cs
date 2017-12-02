@@ -6,7 +6,7 @@
     using Js.Posa.CommandProcessor.Sample.Model;
 
     /// <summary>
-    /// Controller 
+    /// Controller class.
     /// </summary>
     public class Controller
     {
@@ -154,17 +154,28 @@
             this.commandProcessor.ExecuteCommand(subtractCommand);
         }
 
+        /// <summary>
+        /// Handles the times button pressed event.
+        /// </summary>
         public void TimesButtonPressed()
         {
             Command multiplyCommand = new MultiplyCommand(this.calculator);
             this.commandProcessor.ExecuteCommand(multiplyCommand);
         }
 
+        /// <summary>
+        /// Handles the start macro button pressed event.
+        /// </summary>
         public void StartMacroRecording()
         {
             this.commandProcessor.StartMacroRecording();
         }
 
+        /// <summary>
+        /// Handles the stop macro recording button pressed event, and
+        /// saves the recorded macro under a given macro name.
+        /// </summary>
+        /// <param name="name">The macro name.</param>
         public void SaveRecordedMacroAs(string name)
         {
             var macro = this.commandProcessor.StopMacroRecording();
@@ -172,9 +183,13 @@
             this.macros[name] = macro;
         }
 
+        /// <summary>
+        /// Executes the macro command with the given name.
+        /// </summary>
+        /// <param name="name">The macro name.</param>
         public void RunMacro(string name)
         {
-            if(!this.macros.ContainsKey(name))
+            if (!this.macros.ContainsKey(name))
             {
                 throw new Exception($"Unknown macro '{name}'.");
             }
