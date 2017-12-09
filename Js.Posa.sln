@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "mvc", "mvc", "{9CF61B23-206
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Js.Posa.CommandProcessor.Sample", "src\commandprocessor\Js.Posa.CommandProcessor.Sample\Js.Posa.CommandProcessor.Sample.csproj", "{6A9179C7-6948-4045-83BB-650293EE2BEA}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "objectrecovery", "objectrecovery", "{B38BFAE1-D2A5-4822-83E4-64F3C4C5FC15}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Js.Posa.CustomizableObjectRecovery.Sample", "src\objectrecovery\Js.Posa.CustomizableObjectRecovery.Sample\Js.Posa.CustomizableObjectRecovery.Sample.csproj", "{ACFC5618-A8F2-42FB-A53D-6E1179FC226F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +33,10 @@ Global
 		{6A9179C7-6948-4045-83BB-650293EE2BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6A9179C7-6948-4045-83BB-650293EE2BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6A9179C7-6948-4045-83BB-650293EE2BEA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACFC5618-A8F2-42FB-A53D-6E1179FC226F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACFC5618-A8F2-42FB-A53D-6E1179FC226F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACFC5618-A8F2-42FB-A53D-6E1179FC226F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACFC5618-A8F2-42FB-A53D-6E1179FC226F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -39,5 +47,7 @@ Global
 		{9A90C45F-D501-4D9D-BE0B-C09720E77619} = {DFF0985F-F83D-4870-8C56-8DE7F1DECDFC}
 		{9CF61B23-2062-4CFA-A46C-287F51AB1C26} = {DFF0985F-F83D-4870-8C56-8DE7F1DECDFC}
 		{6A9179C7-6948-4045-83BB-650293EE2BEA} = {9A90C45F-D501-4D9D-BE0B-C09720E77619}
+		{B38BFAE1-D2A5-4822-83E4-64F3C4C5FC15} = {DFF0985F-F83D-4870-8C56-8DE7F1DECDFC}
+		{ACFC5618-A8F2-42FB-A53D-6E1179FC226F} = {B38BFAE1-D2A5-4822-83E4-64F3C4C5FC15}
 	EndGlobalSection
 EndGlobal
