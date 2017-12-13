@@ -8,17 +8,18 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Recoverable<T>
+    public class Recoverable<T> where T: ICloneable
     {
         protected readonly Recoverer<T> recoverer;
-        protected readonly Stack<IRecoveryPoint<T>> pastRecoveryPoints;
-        protected readonly Stack<IRecoveryPoint<T>> futureRecoveryPoints;
+        protected readonly Stack<RecoveryPoint<T>> pastRecoveryPoints;
+        protected readonly Stack<RecoveryPoint<T>> futureRecoveryPoints;
 
         public Recoverable(T obj)
         {
-            this.recoverer = new UpdateInPlaceUndoRedoRecoverer<T>(obj);
-            this.pastRecoveryPoints = new Stack<IRecoveryPoint<T>>();
-            this.futureRecoveryPoints = new Stack<IRecoveryPoint<T>>();
+            var recoveryPointFactory = CopyRecoveryPoint<T>.Factory;
+            this.recoverer = new UpdateInPlaceUndoRedoRecoverer<T>(recoveryPointFactory, obj);
+            this.pastRecoveryPoints = new Stack<RecoveryPoint<T>>();
+            this.futureRecoveryPoints = new Stack<RecoveryPoint<T>>();
         }
 
         public void Undo()

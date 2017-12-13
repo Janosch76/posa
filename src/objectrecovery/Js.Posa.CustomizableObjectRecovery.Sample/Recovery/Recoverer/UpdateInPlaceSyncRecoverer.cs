@@ -9,17 +9,17 @@
 
     public class UpdateInPlaceSyncRecoverer<T> : Recoverer<T>
     {
-        public UpdateInPlaceSyncRecoverer(T current) 
-            : base(current)
+        public UpdateInPlaceSyncRecoverer(RecoveryPoint<T>.Factory recoveryPointFactory, T current)
+            : base(recoveryPointFactory, current)
         {
         }
 
-        public override void Undo(IRecoveryPoint<T> recoveryPoint)
+        public override void Undo(RecoveryPoint<T> recoveryPoint)
         {
             this.current = recoveryPoint.Undo(this.current);
         }
 
-        public override void Redo(IRecoveryPoint<T> recoveryPoint)
+        public override void Redo(RecoveryPoint<T> recoveryPoint)
         {
         }
 

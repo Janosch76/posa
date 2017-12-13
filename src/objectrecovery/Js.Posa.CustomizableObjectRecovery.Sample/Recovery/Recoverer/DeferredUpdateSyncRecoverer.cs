@@ -7,18 +7,18 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class DeferredUpdateSyncRecoverer<T> : Recoverer<T>
+    public class DeferredUpdateSyncRecoverer<T> : Recoverer<T> 
     {
-        public DeferredUpdateSyncRecoverer(T current)
-            : base(current)
+        public DeferredUpdateSyncRecoverer(RecoveryPoint<T>.Factory recoveryPointFactory, T current)
+            : base(recoveryPointFactory, current)
         {
         }
 
-        public override void Undo(IRecoveryPoint<T> recoveryPoint)
+        public override void Undo(RecoveryPoint<T> recoveryPoint)
         {
         }
 
-        public override void Redo(IRecoveryPoint<T> recoveryPoint)
+        public override void Redo(RecoveryPoint<T> recoveryPoint)
         {
             this.current = recoveryPoint.Redo(this.current);
         }

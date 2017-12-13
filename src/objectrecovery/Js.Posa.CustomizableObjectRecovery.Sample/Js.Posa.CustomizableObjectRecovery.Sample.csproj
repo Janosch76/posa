@@ -54,7 +54,7 @@
     <Compile Include="Recovery\Recoverer\DeferredUpdateSyncRecoverer.cs" />
     <Compile Include="Model\RecoverableCounter.cs" />
     <Compile Include="Recovery\Recoverer\Recoverer.cs" />
-    <Compile Include="Recovery\RecoveryPoint\IRecoveryPoint.cs" />
+    <Compile Include="Recovery\RecoveryPoint\RecoveryPoint.cs" />
     <Compile Include="Recovery\Recoverer\UpdateInPlaceSyncRecoverer.cs" />
     <Compile Include="Recovery\Recoverer\UpdateInPlaceUndoRedoRecoverer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

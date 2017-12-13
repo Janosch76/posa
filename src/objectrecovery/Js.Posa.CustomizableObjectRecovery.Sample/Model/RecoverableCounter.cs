@@ -19,8 +19,7 @@
 
         public void Increase()
         {
-            IRecoveryPoint<Counter> rp = Activator.CreateInstance<CopyRecoveryPoint<Counter>>();
-            rp = this.recoverer.Prepare(rp);
+            RecoveryPoint<Counter> rp = this.recoverer.Prepare();
             this.recoverer.Current.Increase();
             this.pastRecoveryPoints.Push(rp);
             this.futureRecoveryPoints.Clear();
@@ -28,8 +27,7 @@
 
         public void Reset()
         {
-            IRecoveryPoint<Counter> rp = Activator.CreateInstance<CopyRecoveryPoint<Counter>>();
-            rp = this.recoverer.Prepare(rp);
+            RecoveryPoint<Counter> rp = this.recoverer.Prepare();
             this.recoverer.Current.Reset();
             this.pastRecoveryPoints.Push(rp);
             this.futureRecoveryPoints.Clear();

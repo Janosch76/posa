@@ -7,12 +7,14 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public abstract class Recoverer<T>
+    public abstract class Recoverer<T> 
     {
         protected T current;
+        protected RecoveryPoint<T>.Factory recoveryPointFactory;
 
-        public Recoverer(T current)
+        public Recoverer(RecoveryPoint<T>.Factory recoveryPointFactory, T current)
         {
+            this.recoveryPointFactory = recoveryPointFactory;
             this.current = current;
         }
 
@@ -21,16 +23,16 @@
             get { return this.current; }
         }
 
-        public virtual IRecoveryPoint<T> Prepare(IRecoveryPoint<T> recoveryPoint)
+        public virtual RecoveryPoint<T> Prepare()
         {
-            T obj = recoveryPoint.Prepare(this.current);
-            this.current = whichObject(this.current, obj);
+            RecoveryPoint<T> recoveryPoint = this.recoveryPointFactory.Prepare(this.current);
+            this.current = whichObject(this.current, recoveryPoint.Value);
             return recoveryPoint;
         }
 
-        public abstract void Undo(IRecoveryPoint<T> recoveryPoint);
+        public abstract void Undo(RecoveryPoint<T> recoveryPoint);
 
-        public abstract void Redo(IRecoveryPoint<T> recoveryPoint);
+        public abstract void Redo(RecoveryPoint<T> recoveryPoint);
 
         protected abstract T whichObject(T current, T obj);
     }
