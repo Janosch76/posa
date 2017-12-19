@@ -1,59 +1,36 @@
 ﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using RecoveryPoint;
+    using Js.Posa.CustomizableObjectRecovery.Sample.Recovery.RecoveryPoint;
 
+    /// <summary>
+    /// The object-independent part of an undo-redo mechanism
+    /// </summary>
+    /// <typeparam name="T">The type of recoverable objects.</typeparam>
+    /// <seealso cref="Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer.Recoverer{T}" />
     public class UpdateInPlaceUndoRedoRecoverer<T> : Recoverer<T>
     {
-        private readonly Stack<RecoveryPoint<T>> pastRecoveryPoints;
-        private readonly Stack<RecoveryPoint<T>> futureRecoveryPoints;
-
-        public UpdateInPlaceUndoRedoRecoverer(RecoveryPoint<T>.Factory recoveryPointFactory)
-            : base(recoveryPointFactory)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UpdateInPlaceUndoRedoRecoverer{T}"/> class.
+        /// </summary>
+        /// <param name="current">The current recoverable object.</param>
+        public UpdateInPlaceUndoRedoRecoverer(T current)
+            : base(current)
         {
-            this.pastRecoveryPoints = new Stack<RecoveryPoint<T>>();
-            this.futureRecoveryPoints = new Stack<RecoveryPoint<T>>();
         }
 
-        public override T Undo(T current)
+        public override void Undo(RecoveryPoint<T> recoveryPoint)
         {
-            if (!this.pastRecoveryPoints.Any())
-            {
-                throw new InvalidOperationException();
-            }
-
-            var rp = this.pastRecoveryPoints.Pop();
-            var previous = rp.Undo(current);
-            this.futureRecoveryPoints.Push(rp);
-            return previous;
+            this.current = recoveryPoint.Undo(this.current);
         }
 
-        public override T Redo(T current)
+        public override void Redo(RecoveryPoint<T> recoveryPoint)
         {
-            if (!this.futureRecoveryPoints.Any())
-            {
-                throw new InvalidOperationException();
-            }
-
-            var rp = this.futureRecoveryPoints.Pop();
-            var next = rp.Redo(current);
-            this.pastRecoveryPoints.Push(rp);
-            return next;
+            this.current = recoveryPoint.Redo(this.current);
         }
 
-        protected override void OnRecoveryPointPrepared(RecoveryPoint<T> recoveryPoint)
+        protected override T whichObject(T obj)
         {
-            base.OnRecoveryPointPrepared(recoveryPoint);
-
-            this.pastRecoveryPoints.Push(recoveryPoint);
-            this.futureRecoveryPoints.Clear();
-        }
-
-        protected override T whichObject(T current, T obj)
-        {
-            return current;
+            return this.current;
         }
     }
 }

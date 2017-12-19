@@ -4,6 +4,7 @@
     using System.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Js.Posa.CustomizableObjectRecovery.Sample.Model;
+    using Recovery.Recoverable;
 
     [TestClass]
     public class CounterWithUndoRedoTests : TestBase
@@ -12,7 +13,7 @@
         [TestMethod]
         public void CounterOperation()
         {
-            var counter = new Model.CounterWithUndoRedo(new Counter());
+            var counter = new UndoRedoCounter(new Counter());
 
             counter.Increase();
 
@@ -23,7 +24,7 @@
         [TestMethod]
         public void CounterUndoOperation()
         {
-            var counter = new Model.CounterWithUndoRedo(new Counter());
+            var counter = new UndoRedoCounter(new Counter());
 
             counter.Increase();
             counter.Undo();
@@ -35,7 +36,7 @@
         [TestMethod]
         public void CounterUndoRedoOperation()
         {
-            var counter = new Model.CounterWithUndoRedo(new Counter());
+            var counter = new UndoRedoCounter(new Counter());
 
             counter.Increase();
             counter.Undo();
@@ -48,7 +49,7 @@
         [TestMethod]
         public void CounterSequenceWithUndoRedo()
         {
-            var counter = new Model.CounterWithUndoRedo(new Counter());
+            var counter = new UndoRedoCounter(new Counter());
 
             counter.Increase();
             counter.Increase();

@@ -1,37 +1,34 @@
 ﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer
 {
-    using RecoveryPoint;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Js.Posa.CustomizableObjectRecovery.Sample.Recovery.RecoveryPoint;
 
+    /// <summary>
+    /// Holds the object-independent part of the recovery algorithm.
+    /// </summary>
+    /// <typeparam name="T">The type of recoverable object.</typeparam>
     public abstract class Recoverer<T> 
     {
-        protected RecoveryPoint<T>.Factory recoveryPointFactory;
-        protected RecoveryPoint<T> prepared;
+        protected T current;
 
-        protected Recoverer(RecoveryPoint<T>.Factory recoveryPointFactory)
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Recoverer{T}"/> class.
+        /// </summary>
+        /// <param name="current">The current recoverable object.</param>
+        protected Recoverer(T current)
         {
-            this.recoveryPointFactory = recoveryPointFactory;
+            this.current = current;
         }
 
-        public virtual T PrepareRecoveryPoint(T current)
+        public virtual T Prepare(RecoveryPoint<T> recoveryPoint)
         {
-            RecoveryPoint<T> recoveryPoint = this.recoveryPointFactory.Prepare(current);
-            OnRecoveryPointPrepared(recoveryPoint);
-            return whichObject(current, recoveryPoint.Value);
+            T obj = recoveryPoint.Prepare(this.current);
+            return whichObject(obj);
         }
 
-        protected virtual void OnRecoveryPointPrepared(RecoveryPoint<T> recoveryPoint)
-        {
-        }
+        public abstract void Undo(RecoveryPoint<T> recoveryPoint);
 
-        public abstract T Undo(T current);
+        public abstract void Redo(RecoveryPoint<T> recoveryPoint);
 
-        public abstract T Redo(T current);
-
-        protected abstract T whichObject(T current, T obj);
+        protected abstract T whichObject(T obj);
     }
 }

@@ -2,41 +2,25 @@
 {
     using Model;
     using RecoveryPoint;
-    using System;
 
     public class DeferredUpdateSyncRecoverer<T> : Recoverer<T> 
         where T:IVersioned
     {
-        protected RecoveryPoint<T> recoveryPoint;
-
-        public DeferredUpdateSyncRecoverer(RecoveryPoint<T>.Factory recoveryPointFactory)
-            : base(recoveryPointFactory)
+        public DeferredUpdateSyncRecoverer(T current) 
+            : base(current)
         {
         }
 
-        public Guid CurrentVersion
+        public override void Undo(RecoveryPoint<T> recoveryPoint)
         {
-            get { return this.recoveryPoint.Value.Version; }
         }
 
-        public override T Undo(T current)
+        public override void Redo(RecoveryPoint<T> recoveryPoint)
         {
-            return current;
+            recoveryPoint.Redo(this.current);
         }
 
-        public override T Redo(T current)
-        {
-            return recoveryPoint.Redo(current);
-        }
-
-        protected override void OnRecoveryPointPrepared(RecoveryPoint<T> recoveryPoint)
-        {
-            base.OnRecoveryPointPrepared(recoveryPoint);
-
-            this.recoveryPoint = recoveryPoint;
-        }
-
-        protected override T whichObject(T current, T obj)
+        protected override T whichObject(T obj)
         {
             return obj;
         }

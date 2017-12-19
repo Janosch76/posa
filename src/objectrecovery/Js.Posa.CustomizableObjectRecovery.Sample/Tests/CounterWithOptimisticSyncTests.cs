@@ -4,6 +4,7 @@
     using System.IO;
     using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Js.Posa.CustomizableObjectRecovery.Sample.Model;
+    using Recovery.Recoverable;
 
     [TestClass]
     public class CounterWithOptimisticSyncTests : TestBase
@@ -13,8 +14,8 @@
         public void NonConcurrentCounterOperations()
         {
             var sharedCounter = new Counter();
-            var counter1 = new Model.CounterWithOptimisticSync(sharedCounter);
-            var counter2 = new Model.CounterWithOptimisticSync(sharedCounter);
+            var counter1 = new OptimisticSyncRecoverable(sharedCounter);
+            var counter2 = new OptimisticSyncRecoverable(sharedCounter);
 
             counter1.Increase();
             counter1.Increase();
@@ -28,8 +29,8 @@
         public void ConflictingCounterOperation()
         {
             var sharedCounter = new Counter();
-            var counter1 = new Model.CounterWithOptimisticSync(sharedCounter);
-            var counter2 = new Model.CounterWithOptimisticSync(sharedCounter);
+            var counter1 = new OptimisticSyncRecoverable(sharedCounter);
+            var counter2 = new OptimisticSyncRecoverable(sharedCounter);
 
 
             counter1.Increase();

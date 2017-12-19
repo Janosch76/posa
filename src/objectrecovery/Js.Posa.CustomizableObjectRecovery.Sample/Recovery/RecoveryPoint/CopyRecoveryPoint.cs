@@ -2,19 +2,25 @@
 {
     using System;
 
+    /// <summary>
+    /// A copying recovery point.
+    /// </summary>
+    /// <typeparam name="T">The type of recoverable objects.</typeparam>
+    /// <seealso cref="Js.Posa.CustomizableObjectRecovery.Sample.Recovery.RecoveryPoint.RecoveryPoint{T}" />
     public class CopyRecoveryPoint<T> : RecoveryPoint<T> 
         where T: ICloneable
     {
         private T copy;
 
-        public override T Value
-        {
-            get { return this.copy; }
-        }
-
-        public override void Prepare(T current)
+        /// <summary>
+        /// Prepares the specified current.
+        /// </summary>
+        /// <param name="current">The current recoverable.</param>
+        /// <returns></returns>
+        public override T Prepare(T current)
         {
             this.copy = (T)current.Clone();
+            return copy;
         }
 
         public override T Redo(T current)
