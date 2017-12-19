@@ -9,30 +9,28 @@
 
     public abstract class Recoverer<T> 
     {
-        protected T current;
         protected RecoveryPoint<T>.Factory recoveryPointFactory;
+        protected RecoveryPoint<T> prepared;
 
-        public Recoverer(RecoveryPoint<T>.Factory recoveryPointFactory, T current)
+        protected Recoverer(RecoveryPoint<T>.Factory recoveryPointFactory)
         {
             this.recoveryPointFactory = recoveryPointFactory;
-            this.current = current;
         }
 
-        public T Current
+        public virtual T PrepareRecoveryPoint(T current)
         {
-            get { return this.current; }
+            RecoveryPoint<T> recoveryPoint = this.recoveryPointFactory.Prepare(current);
+            OnRecoveryPointPrepared(recoveryPoint);
+            return whichObject(current, recoveryPoint.Value);
         }
 
-        public virtual RecoveryPoint<T> Prepare()
+        protected virtual void OnRecoveryPointPrepared(RecoveryPoint<T> recoveryPoint)
         {
-            RecoveryPoint<T> recoveryPoint = this.recoveryPointFactory.Prepare(this.current);
-            this.current = whichObject(this.current, recoveryPoint.Value);
-            return recoveryPoint;
         }
 
-        public abstract void Undo(RecoveryPoint<T> recoveryPoint);
+        public abstract T Undo(T current);
 
-        public abstract void Redo(RecoveryPoint<T> recoveryPoint);
+        public abstract T Redo(T current);
 
         protected abstract T whichObject(T current, T obj);
     }

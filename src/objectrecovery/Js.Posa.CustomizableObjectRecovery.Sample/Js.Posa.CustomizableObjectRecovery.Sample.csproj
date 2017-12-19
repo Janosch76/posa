@@ -48,17 +48,20 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\CounterWithOptimisticSync.cs" />
+    <Compile Include="Model\IVersioned.cs" />
     <Compile Include="Recovery\Recoverable\Recoverable.cs" />
     <Compile Include="Recovery\RecoveryPoint\CopyRecoveryPoint.cs" />
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Recovery\Recoverer\DeferredUpdateSyncRecoverer.cs" />
-    <Compile Include="Model\RecoverableCounter.cs" />
+    <Compile Include="Model\CounterWithUndoRedo.cs" />
     <Compile Include="Recovery\Recoverer\Recoverer.cs" />
     <Compile Include="Recovery\RecoveryPoint\RecoveryPoint.cs" />
     <Compile Include="Recovery\Recoverer\UpdateInPlaceSyncRecoverer.cs" />
     <Compile Include="Recovery\Recoverer\UpdateInPlaceUndoRedoRecoverer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\UpdateInPlaceUndoRedoCounter.cs" />
+    <Compile Include="Tests\CounterWithOptimisticSyncTests.cs" />
+    <Compile Include="Tests\CounterWithUndoRedoTests.cs" />
     <Compile Include="Tests\TestBase.cs" />
     <Compile Include="Tests\UnitTestAttribute.cs" />
   </ItemGroup>

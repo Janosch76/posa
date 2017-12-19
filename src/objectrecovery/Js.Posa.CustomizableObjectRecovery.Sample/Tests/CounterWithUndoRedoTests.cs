@@ -6,13 +6,13 @@
     using Js.Posa.CustomizableObjectRecovery.Sample.Model;
 
     [TestClass]
-    public class UpdateInPlaceUndoRedoCounter : TestBase
+    public class CounterWithUndoRedoTests : TestBase
     {
         [UnitTest]
         [TestMethod]
         public void CounterOperation()
         {
-            var counter = new RecoverableCounter(new Counter());
+            var counter = new Model.CounterWithUndoRedo(new Counter());
 
             counter.Increase();
 
@@ -23,7 +23,7 @@
         [TestMethod]
         public void CounterUndoOperation()
         {
-            var counter = new RecoverableCounter(new Counter());
+            var counter = new Model.CounterWithUndoRedo(new Counter());
 
             counter.Increase();
             counter.Undo();
@@ -35,7 +35,7 @@
         [TestMethod]
         public void CounterUndoRedoOperation()
         {
-            var counter = new RecoverableCounter(new Counter());
+            var counter = new Model.CounterWithUndoRedo(new Counter());
 
             counter.Increase();
             counter.Undo();
@@ -48,7 +48,7 @@
         [TestMethod]
         public void CounterSequenceWithUndoRedo()
         {
-            var counter = new RecoverableCounter(new Counter());
+            var counter = new Model.CounterWithUndoRedo(new Counter());
 
             counter.Increase();
             counter.Increase();

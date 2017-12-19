@@ -1,26 +1,39 @@
 ﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer
 {
+    using Model;
     using RecoveryPoint;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class DeferredUpdateSyncRecoverer<T> : Recoverer<T> 
+        where T:IVersioned
     {
-        public DeferredUpdateSyncRecoverer(RecoveryPoint<T>.Factory recoveryPointFactory, T current)
-            : base(recoveryPointFactory, current)
+        protected RecoveryPoint<T> recoveryPoint;
+
+        public DeferredUpdateSyncRecoverer(RecoveryPoint<T>.Factory recoveryPointFactory)
+            : base(recoveryPointFactory)
         {
         }
 
-        public override void Undo(RecoveryPoint<T> recoveryPoint)
+        public Guid CurrentVersion
         {
+            get { return this.recoveryPoint.Value.Version; }
         }
 
-        public override void Redo(RecoveryPoint<T> recoveryPoint)
+        public override T Undo(T current)
         {
-            this.current = recoveryPoint.Redo(this.current);
+            return current;
+        }
+
+        public override T Redo(T current)
+        {
+            return recoveryPoint.Redo(current);
+        }
+
+        protected override void OnRecoveryPointPrepared(RecoveryPoint<T> recoveryPoint)
+        {
+            base.OnRecoveryPointPrepared(recoveryPoint);
+
+            this.recoveryPoint = recoveryPoint;
         }
 
         protected override T whichObject(T current, T obj)

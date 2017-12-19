@@ -8,42 +8,35 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Recoverable<T> where T: ICloneable
+    public class Recoverable<T>
     {
         protected readonly Recoverer<T> recoverer;
-        protected readonly Stack<RecoveryPoint<T>> pastRecoveryPoints;
-        protected readonly Stack<RecoveryPoint<T>> futureRecoveryPoints;
+        private T current;
 
-        public Recoverable(T obj)
+        public Recoverable(T current, Recoverer<T> recoverer)
         {
-            var recoveryPointFactory = CopyRecoveryPoint<T>.Factory;
-            this.recoverer = new UpdateInPlaceUndoRedoRecoverer<T>(recoveryPointFactory, obj);
-            this.pastRecoveryPoints = new Stack<RecoveryPoint<T>>();
-            this.futureRecoveryPoints = new Stack<RecoveryPoint<T>>();
+            this.current = current;
+            this.recoverer = recoverer;
         }
 
-        public void Undo()
+        protected T Current
         {
-            if (!this.pastRecoveryPoints.Any())
-            {
-                throw new InvalidOperationException();
-            }
-
-            var rp = this.pastRecoveryPoints.Pop();
-            this.recoverer.Undo(rp);
-            this.futureRecoveryPoints.Push(rp);
+            get { return this.current; }
         }
 
-        public void Redo()
+        protected void Undo()
         {
-            if (!this.futureRecoveryPoints.Any())
-            {
-                throw new InvalidOperationException();
-            }
+            this.current = this.recoverer.Undo(this.current);
+        }
 
-            var rp = this.futureRecoveryPoints.Pop();
-            this.recoverer.Redo(rp);
-            this.pastRecoveryPoints.Push(rp);
+        protected void Redo()
+        {
+            this.current = this.recoverer.Redo(this.current);
+        }
+
+        protected void Prepare()
+        {
+            this.current = this.recoverer.PrepareRecoveryPoint(this.current);
         }
     }
 }

@@ -6,28 +6,40 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    public class Counter : ICloneable
+    public class Counter : ICloneable, IVersioned
     {
+        private Guid version;
         private int value;
 
         public Counter()
-            : this(0)
+            : this(0, Guid.Empty)
         {
         }
 
         public Counter(Counter counter)
-            : this(counter.value)
+            : this(counter.value, counter.version)
         {
         }
 
-        private Counter(int value)
+        private Counter(int value, Guid version)
         {
             this.value = value;
+            this.version = version;
         }
 
         public int Value
         {
             get { return this.value; }
+        }
+
+        public Guid Version
+        {
+            get { return this.version; }
+        }
+
+        Guid IVersioned.Version
+        {
+            get { return this.version; }
         }
 
         public void Increase()
@@ -40,14 +52,19 @@
             this.value = 0;
         }
 
+        public Counter Clone()
+        {
+            return new Counter(this);
+        }
+
         object ICloneable.Clone()
         {
             return Clone();
         }
 
-        public Counter Clone()
+        void IVersioned.NewVersion()
         {
-            return new Counter(this);
+            this.version = Guid.NewGuid();
         }
     }
 }
