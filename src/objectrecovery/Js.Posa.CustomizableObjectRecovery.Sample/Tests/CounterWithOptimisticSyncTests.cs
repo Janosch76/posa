@@ -15,13 +15,20 @@
         {
             var sharedCounter = new Counter();
             var counter1 = new OptimisticSyncRecoverable(sharedCounter);
+            counter1.BeginChanges();
+
             var counter2 = new OptimisticSyncRecoverable(sharedCounter);
+            counter2.BeginChanges();
 
             counter1.Increase();
             counter1.Increase();
+
+            counter1.CommitChanges();
+            counter2.CommitChanges();
 
             Assert.AreEqual(2, counter1.Value);
-            Assert.AreEqual(2, counter2.Value);
+            Assert.AreEqual(0, counter2.Value);
+            Assert.AreEqual(2, sharedCounter.Value);
         }
 
         [UnitTest]

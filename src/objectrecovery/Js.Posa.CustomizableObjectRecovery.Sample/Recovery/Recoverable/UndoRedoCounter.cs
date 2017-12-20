@@ -44,6 +44,17 @@
         }
 
         /// <summary>
+        /// Sets the counter to the specified value.
+        /// </summary>
+        /// <param name="value">The value.</param>
+        public void Set(int value)
+        {
+            var rp = PrepareRecoveryPoint();
+            this.Instance.Set(value);
+            AddRecoveryPointToHistory(rp);
+        }
+
+        /// <summary>
         /// Resets the counter value.
         /// </summary>
         public void Reset()

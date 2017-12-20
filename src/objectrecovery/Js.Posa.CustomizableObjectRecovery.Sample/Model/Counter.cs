@@ -1,12 +1,9 @@
 ﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Model
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.ComponentModel;
 
-    public class Counter : ICloneable, IVersioned
+    public class Counter : Observable, ICloneable, IVersioned
     {
         private Guid version;
         private int value;
@@ -29,12 +26,19 @@
 
         public int Value
         {
-            get { return this.value; }
-        }
+            get
+            {
+                return this.value;
+            }
 
-        public Guid Version
-        {
-            get { return this.version; }
+            private set
+            {
+                if (this.value != value)
+                {
+                    this.value = value;
+                    OnPropertyChanged(nameof(Value));
+                }
+            }
         }
 
         Guid IVersioned.Version
@@ -44,12 +48,17 @@
 
         public void Increase()
         {
-            this.value++;
+            Value++;
+        }
+
+        public void Set(int value)
+        {
+            Value = value;
         }
 
         public void Reset()
         {
-            this.value = 0;
+            Value = 0;
         }
 
         public Counter Clone()
@@ -62,7 +71,13 @@
             return Clone();
         }
 
-        void IVersioned.NewVersion()
+        protected override void OnPropertyChanged(string propertyName)
+        {
+            SetNewInstanceVersion();
+            base.OnPropertyChanged(propertyName);
+        }
+
+        private void SetNewInstanceVersion()
         {
             this.version = Guid.NewGuid();
         }

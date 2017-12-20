@@ -5,7 +5,5 @@
     public interface IVersioned
     {
         Guid Version { get; }
-
-        void NewVersion();
     }
 }

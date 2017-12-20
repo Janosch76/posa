@@ -10,7 +10,8 @@
         private readonly Recoverer<Counter> recoverer;
         private readonly RecoveryPoint<Counter>.Factory recoveryPointFactory;
         private Counter instance;
-        private RecoveryPoint<Counter> initial;
+        private RecoveryPoint<Counter> recoveryPoint;
+        private Guid initialVersion;
 
         public OptimisticSyncRecoverable()
             : this(new Counter())
@@ -20,9 +21,10 @@
         public OptimisticSyncRecoverable(Counter instance) 
         {
             this.recoverer = new DeferredUpdateSyncRecoverer<Counter>(instance);
-            this.recoveryPointFactory = CopyRecoveryPoint<Counter>.Factory;
+            this.recoveryPointFactory = CopyCommitRecoveryPoint.Factory;
 
             this.instance = instance;
+            this.initialVersion = ((IVersioned)instance).Version;
         }
 
         public int Value
@@ -33,16 +35,19 @@
         public void BeginChanges()
         {
             var rp = this.recoveryPointFactory.Prepare(this.instance);
-            this.initial = rp;
+            this.recoveryPoint = rp;
             this.instance = this.recoverer.Prepare(rp);
         }
 
         public void CommitChanges()
         {
-            if (NoConcurrencyConflict())
+            if (OriginalModified())
             {
-                this.recoverer.Redo(this.initial);
+                this.instance = this.recoveryPoint.Undo(this.instance);
+                throw new Exception("Concurrency conflict. Object has been modified concurrently.");
             }
+
+            this.recoverer.Redo(this.recoveryPoint);
         }
 
         public void Increase()
@@ -52,13 +57,20 @@
 
         public void Reset()
         {
-            this.instance.Increase();
+            this.instance.Reset();
         }
 
-        private bool NoConcurrencyConflict()
+        public void Set(int value)
+        {
+            this.instance.Set(value);
+        }
+
+        private bool OriginalModified()
         {
             // TODO
-            return true;
+            return false;
+
+            var currentVersion = (this.instance as IVersioned).Version;
 
             //var currentVersion = (this.recoverer as DeferredUpdateSyncRecoverer<Counter>).CurrentVersion;
             //return this.Instance.Version.Equals(currentVersion);

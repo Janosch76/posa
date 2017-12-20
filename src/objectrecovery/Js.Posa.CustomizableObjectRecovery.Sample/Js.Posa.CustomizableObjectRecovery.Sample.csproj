@@ -48,9 +48,11 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Model\Observable.cs" />
     <Compile Include="Recovery\Recoverable\OptimisticSyncRecoverable.cs" />
     <Compile Include="Model\IVersioned.cs" />
     <Compile Include="Recovery\Recoverable\UndoRedoRecoverable.cs" />
+    <Compile Include="Recovery\RecoveryPoint\CopyCommitRecoveryPoint.cs" />
     <Compile Include="Recovery\RecoveryPoint\CopyRecoveryPoint.cs" />
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Recovery\Recoverer\DeferredUpdateSyncRecoverer.cs" />
