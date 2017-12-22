@@ -25,7 +25,7 @@
             this.workingCopy = recoveryPoint.Redo(this.workingCopy);
         }
 
-        protected override T whichObject(T obj)
+        protected override T WhichObject(T obj)
         {
             this.workingCopy = obj;
             return obj;

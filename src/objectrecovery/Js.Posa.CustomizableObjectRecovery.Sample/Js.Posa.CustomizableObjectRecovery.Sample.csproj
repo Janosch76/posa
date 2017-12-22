@@ -53,7 +53,9 @@
     <Compile Include="Model\IVersioned.cs" />
     <Compile Include="Recovery\Recoverable\UndoRedoRecoverable.cs" />
     <Compile Include="Recovery\RecoveryPoint\CopyCommitRecoveryPoint.cs" />
-    <Compile Include="Recovery\RecoveryPoint\CopyRecoveryPoint.cs" />
+    <Compile Include="Recovery\RecoveryPoint\CopyRecoveryPoint.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Model\Counter.cs" />
     <Compile Include="Recovery\Recoverer\DeferredUpdateSyncRecoverer.cs" />
     <Compile Include="Recovery\Recoverable\UndoRedoCounter.cs" />

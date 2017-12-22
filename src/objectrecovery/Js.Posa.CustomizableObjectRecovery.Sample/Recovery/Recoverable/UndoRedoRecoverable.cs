@@ -16,7 +16,7 @@
         private readonly Stack<RecoveryPoint<T>> pastRecoveryPoints;
         private readonly Stack<RecoveryPoint<T>> futureRecoveryPoints;
         private readonly Recoverer<T> recoverer;
-        private readonly RecoveryPoint<T>.Factory recoveryPointFactory;
+        private readonly RecoveryPoint<T>.IFactory recoveryPointFactory;
         private T instance;
 
         /// <summary>
@@ -71,6 +71,10 @@
             this.pastRecoveryPoints.Push(rp);
         }
 
+        /// <summary>
+        /// Prepares the recovery point.
+        /// </summary>
+        /// <returns>A recovery point.</returns>
         protected RecoveryPoint<T> PrepareRecoveryPoint()
         {
             var recoveryPoint = this.recoveryPointFactory.Prepare(this.instance);
@@ -78,6 +82,10 @@
             return recoveryPoint;
         }
 
+        /// <summary>
+        /// Adds the recovery point to the undo command history.
+        /// </summary>
+        /// <param name="recoveryPoint">The recovery point to add.</param>
         protected void AddRecoveryPointToHistory(RecoveryPoint<T> recoveryPoint)
         {
             this.pastRecoveryPoints.Push(recoveryPoint);

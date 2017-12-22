@@ -7,27 +7,52 @@
     /// </summary>
     /// <typeparam name="T">The type of recoverable objects.</typeparam>
     /// <seealso cref="Js.Posa.CustomizableObjectRecovery.Sample.Recovery.RecoveryPoint.RecoveryPoint{T}" />
-    public class CopyRecoveryPoint<T> : RecoveryPoint<T> 
-        where T: ICloneable
+    public class CopyRecoveryPoint<T> : RecoveryPoint<T>
+        where T : ICloneable
     {
         private T copy;
 
         /// <summary>
-        /// Prepares the specified current.
+        /// Gets a factory for <see cref="CopyRecoveryPoint{T}"/> objects.
         /// </summary>
-        /// <param name="current">The current recoverable.</param>
-        /// <returns></returns>
+        public static IFactory Factory
+        {
+            get { return new CopyRecoveryPointFactory(); }
+        }
+
+        /// <summary>
+        /// Initializes the recovery point from the given current object.
+        /// </summary>
+        /// <param name="current">The current instance.</param>
+        /// <returns>
+        /// Returns the working instance, typically the given
+        /// current object or a working copy.
+        /// </returns>
         public override T Prepare(T current)
         {
             this.copy = (T)current.Clone();
             return copy;
         }
 
+        /// <summary>
+        /// Redo changes from the given current  instance.
+        /// </summary>
+        /// <param name="current">The current instance.</param>
+        /// <returns>
+        /// The updated working instance.
+        /// </returns>
         public override T Redo(T current)
         {
             return SwapWithCopy(current);
         }
 
+        /// <summary>
+        /// Undo changes in the given current instance.
+        /// </summary>
+        /// <param name="current">The current instance.</param>
+        /// <returns>
+        /// The updated working instance.
+        /// </returns>
         public override T Undo(T current)
         {
             return SwapWithCopy(current);
@@ -40,12 +65,7 @@
             return obj;
         }
 
-        new public static Factory Factory
-        {
-            get { return new CopyRecoveryPointFactory(); }
-        }
-
-        private class CopyRecoveryPointFactory : Factory
+        private class CopyRecoveryPointFactory : IFactory
         {
             public RecoveryPoint<T> Prepare(T obj)
             {

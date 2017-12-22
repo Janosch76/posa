@@ -16,16 +16,16 @@
 
         public override void Undo(RecoveryPoint<T> recoveryPoint)
         {
-             this.current = recoveryPoint.Undo(this.current);
+             this.Current = recoveryPoint.Undo(this.Current);
         }
 
         public override void Redo(RecoveryPoint<T> recoveryPoint)
         {
         }
 
-        protected override T whichObject(T obj)
+        protected override T WhichObject(T obj)
         {
-            return this.current;
+            return this.Current;
         }
     }
 }
