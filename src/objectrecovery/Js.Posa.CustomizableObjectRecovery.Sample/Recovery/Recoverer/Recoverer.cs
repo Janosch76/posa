@@ -1,4 +1,4 @@
-﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer
+﻿ namespace Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer
 {
     using Js.Posa.CustomizableObjectRecovery.Sample.Recovery.RecoveryPoint;
 

@@ -11,23 +11,46 @@
     {
         [UnitTest]
         [TestMethod]
+        public void CounterOperationsOnWorkingCopy()
+        {
+            var sharedCounter = new Counter();
+            using (var counter = new OptimisticSyncRecoverable(sharedCounter))
+            {
+                counter.Increase();
+                counter.Increase();
+
+                Assert.AreEqual(2, counter.Value);
+            }
+        }
+
+        [UnitTest]
+        [TestMethod]
+        public void UncommittedCounterOperations()
+        {
+            var sharedCounter = new Counter();
+            using (var counter = new OptimisticSyncRecoverable(sharedCounter))
+            {
+                counter.Increase();
+                counter.Increase();
+            }
+
+            // modifications not committed
+            Assert.AreEqual(0, sharedCounter.Value);
+        }
+
+        [UnitTest]
+        [TestMethod]
         public void NonConcurrentCounterOperations()
         {
             var sharedCounter = new Counter();
-            var counter1 = new OptimisticSyncRecoverable(sharedCounter);
-            counter1.BeginChanges();
+            using (var counter = new OptimisticSyncRecoverable(sharedCounter))
+            {
+                counter.Increase();
+                counter.Increase();
 
-            var counter2 = new OptimisticSyncRecoverable(sharedCounter);
-            counter2.BeginChanges();
+                counter.CommitChanges();
+            }
 
-            counter1.Increase();
-            counter1.Increase();
-
-            counter1.CommitChanges();
-            counter2.CommitChanges();
-
-            Assert.AreEqual(2, counter1.Value);
-            Assert.AreEqual(0, counter2.Value);
             Assert.AreEqual(2, sharedCounter.Value);
         }
 
@@ -36,15 +59,18 @@
         public void ConflictingCounterOperation()
         {
             var sharedCounter = new Counter();
-            var counter1 = new OptimisticSyncRecoverable(sharedCounter);
-            var counter2 = new OptimisticSyncRecoverable(sharedCounter);
+            using (var counter1 = new OptimisticSyncRecoverable(sharedCounter))
+            {
+                counter1.Increase();
+                counter1.Increase();
 
+                sharedCounter.Increase();
 
-            counter1.Increase();
-            counter2.Increase();
-
-            Assert.AreEqual(1, sharedCounter.Value);
+                AssertThrows<Exception>(() =>
+                {
+                    counter1.CommitChanges();
+                });
+            }
         }
-
     }
 }

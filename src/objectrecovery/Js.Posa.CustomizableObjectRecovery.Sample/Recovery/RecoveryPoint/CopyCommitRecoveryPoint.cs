@@ -16,7 +16,7 @@
         public override Counter Redo(Counter current)
         {
             this.original.Set(current.Value);
-            return current; 
+            return this.original.Clone(); 
         }
 
         public override Counter Undo(Counter current)
