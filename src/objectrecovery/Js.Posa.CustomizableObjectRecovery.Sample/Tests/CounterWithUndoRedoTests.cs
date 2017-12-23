@@ -1,10 +1,8 @@
 ﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Tests
 {
-    using System;
-    using System.IO;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using Js.Posa.CustomizableObjectRecovery.Sample.Model;
-    using Recovery.Recoverable;
+    using Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverable;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     [TestClass]
     public class CounterWithUndoRedoTests : TestBase

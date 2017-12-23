@@ -1,11 +1,6 @@
 ﻿namespace Js.Posa.CustomizableObjectRecovery.Sample.Recovery.Recoverer
 {
-    using RecoveryPoint;
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using Js.Posa.CustomizableObjectRecovery.Sample.Recovery.RecoveryPoint;
 
     public class UpdateInPlaceSyncRecoverer<T> : Recoverer<T>
     {

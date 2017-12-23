@@ -18,16 +18,32 @@
         {
         }
 
+        /// <summary>
+        /// Undo the changes done to a specified recovery point.
+        /// </summary>
+        /// <param name="recoveryPoint">The recovery point.</param>
         public override void Undo(RecoveryPoint<T> recoveryPoint)
         {
             this.Current = recoveryPoint.Undo(this.Current);
         }
 
+        /// <summary>
+        /// Redo the changes done to a specified recovery point.
+        /// </summary>
+        /// <param name="recoveryPoint">The recovery point.</param>
         public override void Redo(RecoveryPoint<T> recoveryPoint)
         {
             this.Current = recoveryPoint.Redo(this.Current);
         }
 
+        /// <summary>
+        /// Determines whether to work
+        /// on the current object or a copy.
+        /// </summary>
+        /// <param name="obj">The object.</param>
+        /// <returns>
+        /// The current working instance.
+        /// </returns>
         protected override T WhichObject(T obj)
         {
             return this.Current;
