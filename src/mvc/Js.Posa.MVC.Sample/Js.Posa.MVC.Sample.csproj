@@ -35,6 +35,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,14 +47,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Form1.cs">
+    <Compile Include="Controllers\Admin\AdminController.cs" />
+    <Compile Include="Views\Admin\AdminView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Views\Admin\AdminView.Designer.cs">
+      <DependentUpon>AdminView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\Counter.cs" />
+    <Compile Include="Controllers\Admin\IView.cs" />
+    <Compile Include="Controllers\Info1\IView.cs" />
+    <Compile Include="Controllers\Info2\IView.cs" />
+    <Compile Include="Controllers\Info1\Info1Controller.cs" />
+    <Compile Include="Controllers\Info2\Info2Controller.cs" />
+    <Compile Include="Models\Observable.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Views\Info1\Info1View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Info1\Info1View.Designer.cs">
+      <DependentUpon>Info1View.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Info2\Info2View.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Info2\Info2View.Designer.cs">
+      <DependentUpon>Info2View.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\Admin\AdminView.resx">
+      <DependentUpon>AdminView.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -63,6 +87,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Views\Info1\Info1View.resx">
+      <DependentUpon>Info1View.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Info2\Info2View.resx">
+      <DependentUpon>Info2View.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -76,6 +106,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
