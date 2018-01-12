@@ -3,7 +3,7 @@
     using System.ComponentModel;
 
     /// <summary>
-    /// Base class for an observable model.
+    /// Base class for an observable model class.
     /// </summary>
     /// <seealso cref="System.ComponentModel.INotifyPropertyChanged" />
     public abstract class Observable : INotifyPropertyChanged

@@ -1,6 +1,6 @@
 ﻿namespace Js.Posa.MVC.Sample.Views.Info2
 {
-    partial class Info2
+    partial class Info2View
     {
         /// <summary>
         /// Required designer variable.
